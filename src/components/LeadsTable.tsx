@@ -49,7 +49,7 @@ export default function LeadsTable({ leads, onSelectLead }: Props) {
             <button
               onClick={() => setSortDesc((s) => !s)}
               className="border px-3 py-2 rounded"
-              aria-label="Ordenar por score"
+              aria-label="sort score"
               title="Order by score"
               type="button"
             >
@@ -60,7 +60,7 @@ export default function LeadsTable({ leads, onSelectLead }: Props) {
       </div>
 
       {/* Cards in mobile */}
-      <div className="sm:hidden space-y-3">
+      <div data-testid="leads-mobile" className="sm:hidden space-y-3">
         {filtered.length === 0 ? (
           <p className="text-gray-500 text-sm">No leads found</p>
         ) : (
@@ -88,7 +88,7 @@ export default function LeadsTable({ leads, onSelectLead }: Props) {
       </div>
 
       {/* Table starting at sm */}
-      <div className="hidden sm:block">
+      <div data-testid="leads-desktop" className="hidden sm:block">
         {filtered.length === 0 ? (
           <p className="text-gray-500 text-md">No leads found</p>
         ) : (

@@ -1,20 +1,26 @@
 import type { Opportunity } from "../types";
 
-interface OpportunitiesList {
+interface OpportunitiesListProps {
   opportunities: Opportunity[];
 }
 
-export default function OpportunitiesList({ opportunities }: OpportunitiesList) {
+export default function Opportunities({ opportunities }: OpportunitiesListProps) {
+  const isEmpty = opportunities.length === 0;
+
   return (
-    <section className="mt-8">
+    <section className="mt-8" data-testid="opps-section">
       <h2 className="text-lg font-semibold mb-2">Opportunities</h2>
 
+      {isEmpty && (
+        <p className="text-gray-500 text-sm" data-testid="opps-empty">
+          No opportunities created.
+        </p>
+      )}
+
       {/* Mobile: cards */}
-      <div className="sm:hidden space-y-3">
-        {opportunities.length === 0 ? (
-          <p className="text-gray-500 text-sm">No opportunities created.</p>
-        ) : (
-          opportunities.map((opp) => (
+      {!isEmpty && (
+        <div data-testid="opps-mobile" className="sm:hidden space-y-3">
+          {opportunities.map((opp) => (
             <div key={opp.id} className="rounded-xl border p-3 shadow-sm">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium">{opp.name}</h3>
@@ -30,15 +36,13 @@ export default function OpportunitiesList({ opportunities }: OpportunitiesList) 
                 )}
               </div>
             </div>
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Desktop: tabela */}
-      <div className="hidden sm:block">
-        {opportunities.length === 0 ? (
-          <p className="text-gray-500 text-md">No opportunities created.</p>
-        ) : (
+      {!isEmpty && (
+        <div data-testid="opps-desktop" className="hidden sm:block">
           <div className="overflow-x-auto rounded-xl border">
             <table className="min-w-full text-sm">
               <thead className="bg-gray-50 text-left">
@@ -65,8 +69,8 @@ export default function OpportunitiesList({ opportunities }: OpportunitiesList) 
               </tbody>
             </table>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }
